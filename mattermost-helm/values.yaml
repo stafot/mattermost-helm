@@ -13,8 +13,6 @@ global:
       enabled: false
     loadTest:
       enabled: false
-    grafana:
-      enabled: false
     jobserver:
       name: jobserver
       enabled: false
@@ -302,3 +300,64 @@ prometheus:
               action: replace
               #regex: __meta_kubernetes_pod_label_app(.*)
               target_label: kubernetes_pod_name
+
+grafana:
+  adminUser: admin
+  adminPassword: admin
+  service:
+    port: 80
+    type: LoadBalancer
+  ingress:
+    enabled: true
+    hosts:
+      - mmgrafana.local
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: mattermost
+        type: prometheus
+        url: http://{{ .Release.Name }}-prometheus-server:9090
+        access: proxy
+        isDefault: true
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards
+  dashboards:
+    mattermost-perf-kpi:
+      gnetId: 2539
+      datasource: mattermost
+    mattermost-perf-monitoring:
+      gnetId: 2542
+      datasource: mattermost
+    mattermost-perf-monitoring-bonus:
+      gnetId: 2545
+      datasource: mattermost
+  grafana.ini:
+    paths:
+      data: /var/lib/grafana/data
+      logs: /var/log/grafana
+      plugins: /var/lib/grafana/plugins
+    analytics:
+      check_for_updates: true
+    log:
+      mode: console
+      level: info
+    dashboards.json:
+      enabled: true
+      path: /var/lib/grafana/dashboards
+    grafana_net:
+      url: https://grafana.net

@@ -15,3 +15,6 @@ dependencies:
   - name: prometheus
     repository: https://kubernetes-charts.storage.googleapis.com
     version: 6.7.0
+  - name: grafana
+    repository: https://kubernetes-charts.storage.googleapis.com
+    version: 1.10.1
