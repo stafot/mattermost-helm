@@ -11,5 +11,8 @@ dependencies:
 - name: minio
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.3.0
-digest: sha256:ef29f7949aa150b3ad4003a16eb3f8889d9eea70672279b8d3217822f38b7785
-generated: 2018-05-21T12:04:32.271934295-04:00
+- name: prometheus
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 6.7.0
+digest: sha256:e970c78af4b241c6c42b16bcbd794341e75092822f98106e2f82f02067dd403d
+generated: 2018-06-02T12:28:30.487162018-04:00
